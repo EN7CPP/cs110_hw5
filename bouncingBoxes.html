@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Bouncing Boxes</title>
+</head>
+<body>
+<style>
+#aquarium{
+	border:2px solid red;
+	background-color:lightblue;
+}	
+
+</style>
+<canvas id="aquarium" height="400px" width="800px"></canvas>
+<script>
+const aqua=document.getElementById("aquarium");
+const cont=aqua.getContext("2d");
+
+let boxes=[];
+const NumBoxes=5;
+
+const Create=function(){
+for(let i=0;i<NumBoxes;i++){
+boxes.push({
+x:Math.random()*aqua.width,
+y:Math.random()*aqua.height,
+height:50,
+width:50,
+color:"green",
+ChangeInX:1,
+ChangeInY:1
+
+
+});	
+
+  }
+}
+
+
+
+
+
+const Move=function(){
+
+for(let i=0;i<NumBoxes;i++){
+if(boxes[i].x+50>=aqua.width){
+boxes[i].ChangeInX=-1;	
+}
+else if(boxes[i].x<=0){
+	boxes[i].ChangeInX=1;
+}
+boxes[i].x+=boxes[i].ChangeInX;
+if(boxes[i].y+50>=aqua.height){
+	boxes[i].ChangeInY=-1;
+}
+else if(boxes[i].y<=0){
+	boxes[i].ChangeInY=1;
+}
+boxes[i].y+=boxes[i].ChangeInY;
+
+}
+
+
+}
+
+const Draw=function(){
+
+cont.clearRect(0,0,aqua.width,aqua.height);
+
+for(let i=0;i<NumBoxes;i++){
+cont.fillStyle=boxes[i].color;
+cont.fillRect(boxes[i].x,boxes[i].y,boxes[i].height,boxes[i].width);
+}
+
+}
+
+
+Create();
+
+const Animate=function(){
+Draw();
+Move();
+
+setTimeout(Animate,10);
+}
+
+Animate();
+
+</script>
+</body>
+</html>
